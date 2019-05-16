@@ -1,9 +1,14 @@
 pipeline {
     agent any
     stages {
-        stage('Test') {
+        stage('prepare') {
             steps {
-                sh 'echo "success"'
+                sh 'echo "prepare"'
+            }
+        }
+        stage('build') {
+            steps {
+                sh 'bash cd.sh'
             }
         }
     }
@@ -13,8 +18,7 @@ pipeline {
         }
         success {
             sh  '''
-            mkdir test
-            tar zcvf test.tgz test
+              tar zcvf deep.tgz deep
             '''
         }
         failure {
