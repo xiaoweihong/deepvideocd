@@ -19,6 +19,7 @@ pipeline {
         success {
             sh  '''
               version=$(echo ${GIT_COMMIT}|cut -c1-8)
+              tar zcvf deep_$version.tgz deep
             '''
         }
         failure {
