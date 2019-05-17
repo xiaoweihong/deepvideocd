@@ -127,6 +127,7 @@ function downloadThor(){
         logging "ERROR: download thor error" 
     fi
 }
+#todo how to make config file 
 
 downloadDeepEmpty
 downloadArcee_captured 0.5.4
