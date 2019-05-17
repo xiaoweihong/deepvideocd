@@ -1,6 +1,7 @@
 #!/bin/bash
 
 URL="http://192.168.2.136/software/release/deepvideo_release/"
+URL_CONFIG="http://192.168.2.136/software/release/deepvideo_release/config"
 SHELL_DIR="$(cd $(dirname $0); pwd)"
 SHELL_LOG="${SHELL_DIR}/logs/cd.log"
 DEEP_DIR="${SHELL_DIR}/deep"
@@ -25,6 +26,19 @@ function run() {
     return ${PIPESTATUS[0]}
 }
 
+function downConfig(){
+    logging "download $1 config file"
+    cd latest
+    if [ $1 == "croatia" ];then
+        wget -O $1_config.txt ${TEST_URL}/config/$1.txt
+    elif [ $1 == "crusader" ];then
+        wget -O $1.conf ${TEST_URL}/config/$1.conf
+    elif [ $1 == "arcee_captured" ] || [ $1 == "arcee_registered" ];then
+        wget -O arcee.json ${TEST_URL}/config/$1.json
+    else
+        wget -O $1.json ${TEST_URL}/config/$1.json
+    fi
+}
 
 function downloadApp(){
     logging "downloadApp $1 $2.tar.gz"
@@ -46,7 +60,9 @@ function downloadApp(){
     else
        wget -q  -c ${URL}$1/$2.tar.gz && tar zxvf $2.tar.gz && ln -s $2 latest && rm -f $2.tar.gz
     fi
+       downConfig $1
 }
+
 
 function downloadDeepEmpty(){
     logging "download deepempty"
